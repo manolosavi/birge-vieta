@@ -62,16 +62,21 @@ int main() {
 			do {
 				root = root - f(polynomial, degree, root, 1);
 			} while ((err<fabs(f(polynomial, degree, root, 0))) && (0<--iter));
-			cout << "Root #" << roots++ << " is: " << root << endl;
-			
-			double y = polynomial[degree];
-			for (int i=degree-1; i>=1; i--) {
-				y *= root;
-				y += polynomial[i];
-				polynomial[i] = y;
+			if (0<iter) {
+				cout << "Root #" << roots++ << " is: " << root << endl;
+				
+				double y = polynomial[degree];
+				for (int i=degree-1; i>=1; i--) {
+					y *= root;
+					y += polynomial[i];
+					polynomial[i] = y;
+				}
+				polynomial.erase(polynomial.begin());
+				degree--;
+			} else {
+				cout << "There are no more real roots left.\n";
+				break;
 			}
-			polynomial.erase(polynomial.begin());
-			degree--;
 		}
 		
 		polynomial.clear();
